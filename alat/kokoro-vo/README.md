@@ -10,13 +10,16 @@ Membuat voice over untuk video BYD dengan [Kokoro TTS](https://github.com/hexgra
 - `pengucapan.json` — perbaikan pengucapan istilah asing dan angka. Edit kalau ada kata yang terdengar salah.
 - `buat_vo.py` — skrip generator
 
-## Jalankan di Google Colab (gratis, tanpa instal di laptop)
+## Cara termudah: buka `VO_BYD_Kokoro.ipynb` di Colab (File → Upload notebook)
+
+## Alternatif: jalankan skrip di Google Colab
 1. Buka https://colab.research.google.com, lalu buat notebook baru.
 2. Unggah ketiga file di atas lewat panel Files di kiri.
 3. Jalankan:
 ```
 !apt-get -qq -y install espeak-ng > /dev/null
-!pip install -q kokoro soundfile
+!pip install -q --no-deps kokoro==0.9.4 misaki==0.9.4
+!pip install -q loguru num2words phonemizer-fork espeakng-loader addict soundfile huggingface_hub
 !python buat_vo.py sampel
 ```
 4. Dengarkan `hasil/sampel_*.wav`, lalu pilih suara terbaik. `ef_dora` dan `em_alex` adalah suara Spanyol, yang menurut dugaan bunyinya paling dekat dengan bahasa Indonesia, tapi ini belum dibuktikan.

@@ -7,7 +7,8 @@ oleh suara Kokoro dari bahasa lain. Hasilnya bisa terdengar beraksen asing,
 jadi dengarkan dulu sampelnya sebelum dipakai.
 
 Cara pakai (Google Colab atau laptop):
-    pip install kokoro soundfile
+    pip install --no-deps kokoro==0.9.4 misaki==0.9.4
+    pip install loguru num2words phonemizer-fork espeakng-loader addict soundfile huggingface_hub torch transformers
     # Linux/Colab: apt-get install -y espeak-ng
 
     python buat_vo.py sampel            # scene 1 dengan beberapa suara -> pilih yang terbaik
@@ -16,6 +17,7 @@ Cara pakai (Google Colab atau laptop):
 
 Hasil vo01..vo09 bisa langsung dimuat di Studio VO lewat "Muat 9 file per scene".
 """
+import importlib.util
 import json
 import re
 import sys
@@ -24,6 +26,12 @@ from pathlib import Path
 
 import numpy as np
 import soundfile as sf
+
+# 'spacy' hanya dipakai modul bahasa Inggris Kokoro dan sering gagal diinstal; ganti dengan modul kosong.
+if importlib.util.find_spec("spacy") is None:
+    import types
+    sys.modules["spacy"] = types.ModuleType("spacy")
+
 from kokoro import KPipeline
 from misaki import espeak
 
