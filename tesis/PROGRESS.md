@@ -1,6 +1,6 @@
 # Progres Tesis
 
-> Dikelola oleh agent `mandor-tesis`. Isi bagian "Profil" dulu (atau minta mandor mewawancaraimu).
+> Dikelola oleh agent `mandor`. Isi bagian "Profil" dulu (atau minta mandor mewawancaraimu).
 > Terakhir diperbarui: -
 
 ## Profil

@@ -1,26 +1,26 @@
 # agent-workspace
 
-Kumpulan subagent Claude Code untuk riset, validasi dokumen, penulisan paper, dan manajemen tesis.
+Subagent Claude Code untuk riset, validasi dokumen, penulisan paper, dan tesis. Ada satu **mandor** yang memeriksa setiap hasil kerja terhadap instruksi tugas.
+
+## Alur
+```
+Instruksi dosen → mandor (buat BRIEF) → agent pekerja → mandor (review)
+                                             ↑              │
+                                             └── REVISI ────┘  (maks 2x, lalu ke kamu)
+```
 
 ## Struktur
 ```
-.claude/agents/
-  mandor-tesis.md       # manajer proyek tesis
-  peneliti.md           # riset literatur
-  penulis-paper.md      # outline & draf
-  validator-dokumen.md  # cek sitasi, fakta, konsistensi
-tesis/PROGRESS.md       # status tesis (diisi oleh mandor)
-tesis/bab/              # draf bab
-riset/                  # hasil riset
-paper/                  # draf paper/tugas
-validasi/               # laporan validasi
+.claude/agents/          mandor, peneliti, penulis-paper, validator-dokumen
+tugas/DAFTAR.md          semua tugas + prioritas
+tugas/_template/BRIEF.md template brief
+tugas/<slug>/            satu folder per tugas (BRIEF, riset, draf, REVIEW)
+tesis/                   BRIEF.md, PROGRESS.md, bab/, catatan/
 ```
 
-## Cara pakai
-Buka Claude Code di folder ini, lalu minta secara natural atau sebut nama agent-nya:
-- "Pakai mandor-tesis, bantu aku isi profil tesis dan buat rencana 8 minggu"
-- "Pakai peneliti, cari 10 paper terbaru tentang <topik>"
-- "Pakai penulis-paper, buat outline Bab 2 dari riset/<file>.md"
-- "Pakai validator-dokumen, cek draf.docx terhadap pedoman kampus"
+## Contoh perintah
+- "Tugas baru: <salin-tempel instruksi dosen>. Deadline Jumat."
+- "Kerjakan tugas/metopen-week5 sampai lolos mandor."
+- "Mandor, minggu ini aku cuma punya 6 jam. Apa yang dikerjakan duluan?"
 
-Ketik `/agents` untuk melihat atau mengedit agent.
+Folder lama `riset/`, `paper/`, `validasi/` sudah tidak dipakai dan boleh dihapus.
