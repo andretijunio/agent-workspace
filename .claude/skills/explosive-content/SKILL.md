@@ -18,7 +18,7 @@ Usage:
 3. Ask for (or read) `keywords.json`: 15-25 phrases the user wants to be found for, in the words their buyer types. Mix what buyers WANT ("more leads", "close bigger deals") with what the user teaches. Add `exclude_channels` (their own channel IDs). Outside B2B sales, set `topic_terms` / `off_topic_terms` to their market's words.
 
 ## Profil niche
-`keywords.json` = contoh B2B sales. `keywords-horor-id.json` = horor Indonesia, format Short (bahasa `id`, durasi <=60 detik). Atur batas lewat blok `settings` (language, min_seconds, max_seconds, video_duration, min_views, min_subs, min_like_rate, published_after). Untuk niche lain, salin salah satu file dan ubah. Daftar keyword horor itu draf tebakan, revisi setelah scan pertama.
+`keywords.json` = contoh B2B sales. `keywords-horor-id.json` = horor Indonesia, format Short (bahasa `id`, durasi <=180 detik). Atur batas lewat blok `settings` (language, min_seconds, max_seconds, video_duration, min_views, min_subs, min_like_rate, published_after). Untuk niche lain, salin salah satu file dan ubah. Daftar keyword horor itu draf tebakan, revisi setelah scan pertama.
 
 ## Step 1: Scan (code)
 ```bash

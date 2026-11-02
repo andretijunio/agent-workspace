@@ -1,9 +1,9 @@
 {
- "_about": "Horor Indonesia, format Short. DRAF dari Claude: keyword dan daftar kata ditebak, belum divalidasi. Revisi setelah scan pertama. Cek apakah YouTube API menandai Shorts <=60 detik; sejak 2024 Shorts bisa sampai 3 menit (belum saya verifikasi), jadi max_seconds mungkin perlu dinaikkan.",
+ "_about": "Horor Indonesia, format Short (<=180 detik, sesuai konfirmasi user bahwa Shorts bisa sampai 3 menit). DRAF dari Claude: keyword dan daftar kata ditebak, belum divalidasi. Revisi setelah scan pertama.",
  "settings": {
   "language": "id",
   "min_seconds": 0,
-  "max_seconds": 60,
+  "max_seconds": 180,
   "video_duration": "short",
   "min_subs": 500,
   "min_views": 5000,
@@ -11,23 +11,151 @@
   "published_after": "2024-01-01T00:00:00Z"
  },
  "exclude_channels": [],
- "topic_terms": ["horor", "horror", "hantu", "seram", "angker", "kuntilanak", "pocong", "tuyul", "genderuwo", "santet", "pesugihan", "mistis", "misteri", "kisah nyata", "pengalaman", "kos", "rumah kosong", "jin", "arwah", "sundel", "wewe", "teror", "menyeramkan", "creepy", "ghost", "tumbal", "kerasukan", "ritual", "keramat", "kuburan", "makam", "desa"],
- "off_topic_terms": ["gameplay", "walkthrough", "trailer", "reaction", "mukbang", "lagu", "soundtrack", "ost", "review film", "prank", "sholawat", "ceramah"],
+ "topic_terms": [
+  "horor",
+  "horror",
+  "hantu",
+  "seram",
+  "angker",
+  "kuntilanak",
+  "pocong",
+  "tuyul",
+  "genderuwo",
+  "santet",
+  "pesugihan",
+  "mistis",
+  "misteri",
+  "kisah nyata",
+  "pengalaman",
+  "kos",
+  "rumah kosong",
+  "jin",
+  "arwah",
+  "sundel",
+  "wewe",
+  "teror",
+  "menyeramkan",
+  "creepy",
+  "ghost",
+  "tumbal",
+  "kerasukan",
+  "ritual",
+  "keramat",
+  "kuburan",
+  "makam",
+  "desa"
+ ],
+ "off_topic_terms": [
+  "gameplay",
+  "walkthrough",
+  "trailer",
+  "reaction",
+  "mukbang",
+  "lagu",
+  "soundtrack",
+  "ost",
+  "review film",
+  "prank",
+  "sholawat",
+  "ceramah"
+ ],
  "keywords": [
-  {"kw": "kisah horor kos-kosan", "also": ["cerita hantu kos", "pengalaman mistis kos"]},
-  {"kw": "pengalaman horor nyata", "also": ["kisah nyata horor", "cerita seram nyata"]},
-  {"kw": "pesugihan", "also": ["kisah pesugihan", "tumbal pesugihan"]},
-  {"kw": "kuntilanak", "also": ["penampakan kuntilanak"]},
-  {"kw": "pocong", "also": ["penampakan pocong"]},
-  {"kw": "santet", "also": ["kisah santet", "teluh"]},
-  {"kw": "horor desa", "also": ["misteri desa terlarang", "ritual desa"]},
-  {"kw": "rumah kosong angker", "also": ["rumah angker"]},
-  {"kw": "kerasukan", "also": ["kesurupan"]},
-  {"kw": "mitos horor jawa", "also": ["legenda hantu jawa", "folklore indonesia"]},
-  {"kw": "kisah horor ojol", "also": ["horor driver malam"]},
-  {"kw": "horor rumah sakit", "also": ["cerita seram rumah sakit"]},
-  {"kw": "wewe gombel", "also": ["genderuwo", "tuyul"]},
-  {"kw": "misteri hutan terlarang", "also": ["hutan angker"]},
-  {"kw": "teror malam jumat", "also": ["horor malam jumat"]}
+  {
+   "kw": "kisah horor kos-kosan",
+   "also": [
+    "cerita hantu kos",
+    "pengalaman mistis kos"
+   ]
+  },
+  {
+   "kw": "pengalaman horor nyata",
+   "also": [
+    "kisah nyata horor",
+    "cerita seram nyata"
+   ]
+  },
+  {
+   "kw": "pesugihan",
+   "also": [
+    "kisah pesugihan",
+    "tumbal pesugihan"
+   ]
+  },
+  {
+   "kw": "kuntilanak",
+   "also": [
+    "penampakan kuntilanak"
+   ]
+  },
+  {
+   "kw": "pocong",
+   "also": [
+    "penampakan pocong"
+   ]
+  },
+  {
+   "kw": "santet",
+   "also": [
+    "kisah santet",
+    "teluh"
+   ]
+  },
+  {
+   "kw": "horor desa",
+   "also": [
+    "misteri desa terlarang",
+    "ritual desa"
+   ]
+  },
+  {
+   "kw": "rumah kosong angker",
+   "also": [
+    "rumah angker"
+   ]
+  },
+  {
+   "kw": "kerasukan",
+   "also": [
+    "kesurupan"
+   ]
+  },
+  {
+   "kw": "mitos horor jawa",
+   "also": [
+    "legenda hantu jawa",
+    "folklore indonesia"
+   ]
+  },
+  {
+   "kw": "kisah horor ojol",
+   "also": [
+    "horor driver malam"
+   ]
+  },
+  {
+   "kw": "horor rumah sakit",
+   "also": [
+    "cerita seram rumah sakit"
+   ]
+  },
+  {
+   "kw": "wewe gombel",
+   "also": [
+    "genderuwo",
+    "tuyul"
+   ]
+  },
+  {
+   "kw": "misteri hutan terlarang",
+   "also": [
+    "hutan angker"
+   ]
+  },
+  {
+   "kw": "teror malam jumat",
+   "also": [
+    "horor malam jumat"
+   ]
+  }
  ]
 }
