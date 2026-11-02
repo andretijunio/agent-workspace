@@ -28,6 +28,9 @@ OWN_CHANNELS = set()    # filled from keywords.json "exclude_channels" (your own
 MIN_SUBS = 500          # below this the ratio is noise
 MIN_VIEWS = 2000
 MIN_SECONDS = 180       # long-form only, Shorts inflate ratios
+MAX_SECONDS = None      # set (e.g. 60) in keywords.json "settings" to hunt Shorts only
+LANG = "en"             # audio language prefix; "id" for Indonesian
+VIDEO_DURATION = None   # optional API search filter: "short" (<4 min), "medium", "long"
 PUBLISHED_AFTER = "2022-01-01T00:00:00Z"   # topics still hot, not 2016 relics
 MIN_LIKE_RATE = 0.003   # organic videos get >=0.3% likes; promoted ads get views without likes
 # On-topic check: the title must talk about selling, and not about jobs/drama.
@@ -72,8 +75,8 @@ def qualifies(v):
     if not any(w in t for w in SALES_TERMS) or any(w in t + " " + v.get("channel", "").lower() for w in OFF_TOPIC):
         return "off topic"
     lang = v.get("lang", "")
-    if (lang and not lang.startswith("en")) or re.search(r"[áéíóúñ¿¡àèçãõ]", t):
-        return "not English"
+    if (lang and not lang.startswith(LANG)) or (LANG == "en" and re.search(r"[áéíóúñ¿¡àèçãõ]", t)):
+        return "wrong language"
     if v["views"] >= MIN_VIEWS and v.get("likes") is not None and v["likes"] / v["views"] < MIN_LIKE_RATE:
         return "likely paid ad (views without likes)"
     if v["channel_id"] in OWN_CHANNELS:
@@ -82,6 +85,8 @@ def qualifies(v):
         return "subs hidden or too small"
     if v["seconds"] < MIN_SECONDS:
         return "short"
+    if MAX_SECONDS and v["seconds"] > MAX_SECONDS:
+        return "too long"
     if v["views"] < MIN_VIEWS:
         return "too few views"
     if v["views"] <= v["subs"]:
@@ -95,10 +100,11 @@ def chunks(xs, n=50):
 
 
 def search_ids(key, q, order, cache):
-    ck = f"{q}|{order}|{PUBLISHED_AFTER}"
+    ck = f"{q}|{order}|{PUBLISHED_AFTER}|{LANG}|{VIDEO_DURATION}"
     if ck not in cache:   # same-day reruns cost no quota
+        extra = {"videoDuration": VIDEO_DURATION} if VIDEO_DURATION else {}
         res = get("search", part="id", q=q, type="video", maxResults=50, order=order,
-                  relevanceLanguage="en", publishedAfter=PUBLISHED_AFTER, key=key)
+                  relevanceLanguage=LANG, publishedAfter=PUBLISHED_AFTER, key=key, **extra)
         cache[ck] = [i["id"]["videoId"] for i in res.get("items", [])]
     return cache[ck]
 
@@ -186,7 +192,7 @@ def selftest():
     assert qualifies(dict(base, views=3000, subs=1000, seconds=40)) == "short"
     assert qualifies(dict(base, views=3000, subs=1000, hidden=True)) == "subs hidden or too small"
     assert qualifies(dict(base, views=3000, subs=1000, channel_id="MINE")) == "own channel"
-    assert qualifies(dict(base, views=3000, subs=1000, title="Cómo prospectar en LinkedIn")) == "not English"
+    assert qualifies(dict(base, views=3000, subs=1000, title="Cómo prospectar en LinkedIn")) == "wrong language"
     assert qualifies(dict(base, views=240000, subs=937, likes=90)) == "likely paid ad (views without likes)"
     assert qualifies(dict(base, views=3000, subs=1000, likes=60)) is None
     assert iso_seconds("PT1H2M3S") == 3723 and iso_seconds("PT45S") == 45
@@ -206,7 +212,12 @@ def main():
     n = int(arg("--top", 20))
     cfg = json.loads(Path(arg("--keywords", "keywords.json")).read_text())
     OWN_CHANNELS.update(cfg.get("exclude_channels", []))
-    global SALES_TERMS, OFF_TOPIC
+    global SALES_TERMS, OFF_TOPIC, MIN_SUBS, MIN_VIEWS, MIN_SECONDS, MAX_SECONDS, LANG, VIDEO_DURATION, MIN_LIKE_RATE, PUBLISHED_AFTER
+    st = cfg.get("settings", {})
+    MIN_SUBS = st.get("min_subs", MIN_SUBS); MIN_VIEWS = st.get("min_views", MIN_VIEWS)
+    MIN_SECONDS = st.get("min_seconds", MIN_SECONDS); MAX_SECONDS = st.get("max_seconds", MAX_SECONDS)
+    LANG = st.get("language", LANG); VIDEO_DURATION = st.get("video_duration", VIDEO_DURATION)
+    MIN_LIKE_RATE = st.get("min_like_rate", MIN_LIKE_RATE); PUBLISHED_AFTER = st.get("published_after", PUBLISHED_AFTER)
     SALES_TERMS = tuple(w.lower() for w in cfg.get("topic_terms", SALES_TERMS))
     OFF_TOPIC = tuple(w.lower() for w in cfg.get("off_topic_terms", OFF_TOPIC))
     keywords = cfg["keywords"]
